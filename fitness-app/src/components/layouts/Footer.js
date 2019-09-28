@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
-const Footer = () => {
+const Footer = ({ categories }) => {
   return (
     <Paper>
       <Tabs
@@ -10,9 +10,13 @@ const Footer = () => {
         textColor="primary"
         centered
       >
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
+        <Tab label="All" />
+        {categories.map(
+          category => <Tab
+            key={category}
+            label={category}
+          />
+        )}
       </Tabs>
     </Paper>
   );
