@@ -6,15 +6,29 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
+const styles = {
+  formControl: {
+    width: 500
+  }
+};
 
 export default class extends Component {
   state = {
-    open: false
+    open: false,
+    exercise: {
+      title: '',
+      description: '',
+      muscles: ''
+    }
   }
 
   handleToggle = () => {
@@ -23,8 +37,35 @@ export default class extends Component {
     });
   }
 
+  handleChange = name => ({ target: { value } }) => {
+    this.setState(prevState => ({
+      exercise: {
+        ...prevState.exercise,
+        [name]: value
+      }
+    }));
+  }
+
+  handleSubmit = () => {
+    const { exercise } = this.state;
+    this.props.onExerciseCreate({
+      ...exercise,
+      id: exercise.title.toLowerCase().replace(/ /g, '-')
+    });
+
+    this.setState({
+      open: false,
+      exercise: {
+        title: '',
+        description: '',
+        muscles: ''
+      }
+    });
+  }
+
   render() {
-    const { open } = this.state;
+    const { open, exercise: { title, description, muscles } } = this.state;
+    const { categories } = this.props;
 
     return <Fragment>
       <Fab size="small" onClick={this.handleToggle}>
@@ -40,20 +81,50 @@ export default class extends Component {
         <DialogContent>
           <DialogContentText>
             Please fill out the form below.
-        </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-          />
+          </DialogContentText>
+          <form>
+            <TextField
+              label="Title"
+              value={title}
+              onChange={this.handleChange('title')}
+              margin="normal"
+              style={styles.formControl}
+            />
+            <br />
+            <FormControl style={styles.formControl}>
+              <InputLabel htmlFor="muscles">Muscles</InputLabel>
+              <Select
+                value={muscles}
+                onChange={this.handleChange('muscles')}
+              >
+                {categories.map(category => (
+                  <MenuItem key={category} value={category}>
+                    {category}
+                  </MenuItem>)
+                )}
+              </Select>
+            </FormControl>
+            <br />
+            <TextField
+              label="Description"
+              multiline
+              rows="4"
+              value={description}
+              onChange={this.handleChange('description')}
+              margin="normal"
+              style={styles.formControl}
+            />
+          </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleToggle} color="primary" variant="contained" size="small">
+          <Button
+            onClick={this.handleSubmit}
+            color="primary"
+            variant="contained"
+            size="small"
+          >
             Create
-        </Button>
+          </Button>
         </DialogActions>
       </Dialog>
     </Fragment>;
