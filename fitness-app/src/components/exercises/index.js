@@ -17,37 +17,51 @@ const styles = {
   }
 };
 
-const Exercises = ({ exercises }) => {
+const Exercises = ({
+  exercises,
+  category,
+  onExerciseSelect,
+  exercise: {
+    id,
+    title = 'Welcome!',
+    description = 'Please select an exercise from the list on the left.'
+  }
+}) => {
   return (
     <Grid container spacing={1}>
       <Grid item sm={4}>
         <Paper style={styles.paper}>
-          {exercises.map(([category, exercises]) => {
-            return <Fragment key={category}>
-              <Typography
-                variant="h6"
-                style={styles.category}
-              >
-                {category}
-              </Typography>
-              <List component="ul">
-                {exercises.map(({ id, title }) =>
-                  <ListItem button key={id}>
-                    <ListItemText primary={title} />
-                  </ListItem>
-                )}
-              </List>
-            </Fragment>
+          {exercises.map(([cat, exercises]) => {
+            return !category || category === cat
+              ? <Fragment key={cat}>
+                <Typography
+                  variant="h6"
+                  style={styles.category}
+                >
+                  {cat}
+                </Typography>
+                <List component="ul">
+                  {exercises.map(({ id, title }) =>
+                    <ListItem
+                      button
+                      key={id}
+                      onClick={() => onExerciseSelect(id)}>
+                      <ListItemText primary={title} />
+                    </ListItem>
+                  )}
+                </List>
+              </Fragment>
+              : null
           })}
         </Paper>
       </Grid>
       <Grid item sm={8}>
         <Paper style={styles.paper}>
           <Typography variant="h4">
-            Welcome!
+            {title}
           </Typography>
           <Typography variant="subtitle2" style={styles.subtitle}>
-            Please select an exercise from the list on the left.
+            {description}
           </Typography>
         </Paper>
       </Grid>

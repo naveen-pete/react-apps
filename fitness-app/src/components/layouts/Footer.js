@@ -1,14 +1,24 @@
 import React from 'react';
 import { Paper, Tabs, Tab } from '@material-ui/core';
 
-const Footer = ({ categories }) => {
+const Footer = ({ category, categories, onCategorySelect }) => {
+  const index = category
+    ? categories.findIndex(c => c === category) + 1
+    : 0;
+
+  const handleChange = (e, index) => {
+    const category = index === 0 ? '' : categories[index - 1];
+    onCategorySelect(category);
+  };
+
   return (
     <Paper>
       <Tabs
-        value={0}
+        value={index}
         indicatorColor="primary"
         textColor="primary"
         centered
+        onChange={handleChange}
       >
         <Tab label="All" />
         {categories.map(
