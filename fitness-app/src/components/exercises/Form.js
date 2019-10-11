@@ -10,7 +10,7 @@ import {
 
 const styles = {
   formControl: {
-    width: 300
+    width: 250
   }
 };
 

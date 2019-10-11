@@ -7,16 +7,17 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  IconButton
+  IconButton,
+  withStyles
 } from '@material-ui/core';
 import { Delete, Edit } from "@material-ui/icons";
 import Form from './Form';
 
-const styles = {
+const styles = theme => ({
   paper: {
     padding: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 3,
+    marginBottom: 3,
     height: 500,
     overflowY: 'auto'
   },
@@ -26,15 +27,12 @@ const styles = {
   subtitle: {
     marginTop: 20
   }
-};
+});
 
 const Exercises = ({
+  classes,
   exercises,
   category,
-  onExerciseSelect,
-  onExerciseDelete,
-  onExerciseEdit,
-  onExerciseEditSubmit,
   exercise: {
     id,
     title = 'Welcome!',
@@ -42,18 +40,22 @@ const Exercises = ({
   },
   exercise,
   editMode,
-  categories
+  categories,
+  onExerciseSelect,
+  onExerciseDelete,
+  onExerciseEdit,
+  onExerciseEditSubmit
 }) => {
   return (
     <Grid container spacing={1}>
-      <Grid item sm={4}>
-        <Paper style={styles.paper}>
+      <Grid item xs={12} sm={6}>
+        <Paper className={classes.paper}>
           {exercises.map(([cat, exercises]) => {
             return !category || category === cat
               ? <Fragment key={cat}>
                 <Typography
                   variant="h6"
-                  style={styles.category}
+                  className={classes.category}
                 >
                   {cat}
                 </Typography>
@@ -81,8 +83,8 @@ const Exercises = ({
           })}
         </Paper>
       </Grid>
-      <Grid item sm={8}>
-        <Paper style={styles.paper}>
+      <Grid item xs={12} sm={6}>
+        <Paper className={classes.paper}>
           {
             editMode
               ? <Form
@@ -94,7 +96,7 @@ const Exercises = ({
                 <Typography variant="h4">
                   {title}
                 </Typography>
-                <Typography variant="subtitle2" style={styles.subtitle}>
+                <Typography variant="subtitle2" className={classes.subtitle}>
                   {description}
                 </Typography>
               </Fragment>
@@ -105,4 +107,4 @@ const Exercises = ({
   );
 };
 
-export default Exercises;
+export default withStyles(styles)(Exercises);

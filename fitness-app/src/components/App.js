@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { CssBaseline } from "@material-ui/core";
 import { Header, Footer } from './layouts';
 import Exercises from './exercises';
 import { muscles, exercises } from '../store';
@@ -66,21 +67,25 @@ class App extends Component {
     const exercises = this.getExercisesByMuscles();
     return (
       <Fragment>
+        <CssBaseline />
+
         <Header
           categories={muscles}
           onExerciseCreate={this.handleExerciseCreate}
         />
+
         <Exercises
           exercises={exercises}
           exercise={exercise}
           category={category}
+          editMode={editMode}
+          categories={muscles}
           onExerciseSelect={this.handleExerciseSelect}
           onExerciseDelete={this.handleExerciseDelete}
           onExerciseEdit={this.handleExerciseEdit}
-          editMode={editMode}
-          categories={muscles}
           onExerciseEditSubmit={this.handleExerciseEditSubmit}
         />
+
         <Footer
           category={category}
           categories={muscles}

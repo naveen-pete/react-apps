@@ -17,8 +17,9 @@ const Footer = ({ category, categories, onCategorySelect }) => {
         value={index}
         indicatorColor="primary"
         textColor="primary"
-        centered
         onChange={handleChange}
+        variant="scrollable"
+        scrollButtons="auto"
       >
         <Tab label="All" />
         {categories.map(
