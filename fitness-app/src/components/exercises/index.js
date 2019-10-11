@@ -10,6 +10,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import { Delete, Edit } from "@material-ui/icons";
+import Form from './Form';
 
 const styles = {
   paper: {
@@ -32,11 +33,16 @@ const Exercises = ({
   category,
   onExerciseSelect,
   onExerciseDelete,
+  onExerciseEdit,
+  onExerciseEditSubmit,
   exercise: {
     id,
     title = 'Welcome!',
     description = 'Please select an exercise from the list on the left.'
-  }
+  },
+  exercise,
+  editMode,
+  categories
 }) => {
   return (
     <Grid container spacing={1}>
@@ -60,7 +66,7 @@ const Exercises = ({
                       <ListItemText primary={title} />
 
                       <ListItemSecondaryAction>
-                        <IconButton edge="end" onClick={() => onExerciseDelete(id)}>
+                        <IconButton edge="end" onClick={() => onExerciseEdit(id)}>
                           <Edit />
                         </IconButton>
                         <IconButton edge="end" onClick={() => onExerciseDelete(id)}>
@@ -77,12 +83,22 @@ const Exercises = ({
       </Grid>
       <Grid item sm={8}>
         <Paper style={styles.paper}>
-          <Typography variant="h4">
-            {title}
-          </Typography>
-          <Typography variant="subtitle2" style={styles.subtitle}>
-            {description}
-          </Typography>
+          {
+            editMode
+              ? <Form
+                categories={categories}
+                onExerciseSubmit={onExerciseEditSubmit}
+                exercise={exercise}
+              />
+              : <Fragment>
+                <Typography variant="h4">
+                  {title}
+                </Typography>
+                <Typography variant="subtitle2" style={styles.subtitle}>
+                  {description}
+                </Typography>
+              </Fragment>
+          }
         </Paper>
       </Grid>
     </Grid>
