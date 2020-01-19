@@ -7,10 +7,10 @@ const Nav = () => {
       <NavLink exact className="nav-link" activeClassName="active" to="/">Home</NavLink>
     </li>
     <li className="nav-item">
-      <NavLink className="nav-link" activeClassName="active" to="/posts">Posts</NavLink>
+      <NavLink exact className="nav-link" activeClassName="active" to="/posts">Posts</NavLink>
     </li>
     <li className="nav-item">
-      <NavLink className="nav-link" activeClassName="active" to="/new-post">New Post</NavLink>
+      <NavLink exact className="nav-link" activeClassName="active" to="/posts/new">New Post</NavLink>
     </li>
   </ul>;
 };

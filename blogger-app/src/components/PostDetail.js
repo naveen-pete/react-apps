@@ -8,10 +8,19 @@ class PostDetail extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-
     const post = posts.find(p => p.id === parseInt(id));
 
     this.setState({ post: post });
+  }
+
+  handleEditClick = () => {
+    this.props.history.push(`/posts/${this.state.post.id}/edit`);
+  }
+
+  handleDeleteClick = (postId) => {
+    const index = posts.findIndex(p => p.id === postId)
+    posts.splice(index, 1);
+    this.props.history.push('/posts');
   }
 
   render() {
@@ -40,11 +49,15 @@ class PostDetail extends Component {
           </em></p>
         </div>
         <div className="card-footer">
-          <button className="btn btn-sm btn-outline-primary mr-1" type="button">Edit</button>
+          <button
+            className="btn btn-sm btn-outline-primary mr-1"
+            type="button"
+            onClick={this.handleEditClick}
+          >Edit</button>
           <button
             className="btn btn-sm btn-outline-danger"
             type="button"
-            onClick={() => { }}
+            onClick={() => this.handleDeleteClick(post.id)}
           >Delete</button>
         </div>
       </div>
