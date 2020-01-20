@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { categories, categoryAll } from '../data/store';
+import { categoryAll } from '../constants';
+import { getCategories } from '../api/categories';
 
 const Categories = (props) => {
-  const categoriesWithAll = [categoryAll, ...categories];
+  const categoriesWithAll = [categoryAll, ...getCategories()];
   return <div>
     <h4>Categories</h4>
     <div className="list-group">

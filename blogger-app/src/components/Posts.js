@@ -2,14 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import Categories from './Categories';
-import { posts, categoryAll } from '../data/store';
+import { categoryAll } from '../constants';
+import { getPosts, deletePost } from '../api/posts';
 
 class Posts extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      posts: posts,
+      posts: [],
       selectedCategory: categoryAll
     };
 
@@ -17,14 +18,24 @@ class Posts extends React.Component {
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
+  componentDidMount() {
+    const posts = getPosts();
+    this.setState({ posts });
+  }
+
   handleCategorySelect(category) {
     this.setState({ selectedCategory: category });
   }
 
   handleDeleteClick(postId) {
-    const index = posts.findIndex(p => p.id === postId)
-    posts.splice(index, 1);
-    this.setState({ posts });
+    deletePost(postId);
+
+    this.setState((prevPosts) => {
+      const filteredPosts = this.state.posts.filter(p => p.id !== postId);
+      return {
+        posts: filteredPosts
+      };
+    });
   }
 
   renderPosts(filteredPosts) {

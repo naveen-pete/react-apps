@@ -36,8 +36,3 @@ export const categories = [
     name: 'Redux'
   }
 ];
-
-export const categoryAll = {
-  id: 'all',
-  name: 'All'
-};

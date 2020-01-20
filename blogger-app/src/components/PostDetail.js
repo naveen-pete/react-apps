@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { posts } from '../data/store';
+
+import { getPost, deletePost } from '../api/posts';
 
 class PostDetail extends Component {
   state = {
@@ -8,9 +9,8 @@ class PostDetail extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const post = posts.find(p => p.id === parseInt(id));
-
-    this.setState({ post: post });
+    const post = getPost(parseInt(id));
+    this.setState({ post });
   }
 
   handleEditClick = () => {
@@ -18,8 +18,7 @@ class PostDetail extends Component {
   }
 
   handleDeleteClick = (postId) => {
-    const index = posts.findIndex(p => p.id === postId)
-    posts.splice(index, 1);
+    deletePost(postId)
     this.props.history.push('/posts');
   }
 

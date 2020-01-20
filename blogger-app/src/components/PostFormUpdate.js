@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import PostForm from './PostForm';
-import { posts } from '../data/store';
+import { getPost, updatePost } from '../api/posts';
 
 class PostFormUpdate extends Component {
   state = {
@@ -10,17 +10,13 @@ class PostFormUpdate extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    const post = posts.find(p => p.id === parseInt(id));
+    const post = getPost(parseInt(id));
 
     this.setState({ post });
   }
 
   handlePostUpdate = (post) => {
-    const postToUpdate = posts.find(p => post.id);
-    postToUpdate.title = post.title;
-    postToUpdate.body = post.body;
-    postToUpdate.author = post.author;
-    postToUpdate.category = post.category;
+    updatePost(post);
 
     this.props.history.push('/posts');
   }
@@ -28,8 +24,8 @@ class PostFormUpdate extends Component {
   render() {
     return <PostForm
       operation="Update"
-      onSubmit={this.handlePostUpdate}
       post={this.state.post}
+      onSubmit={this.handlePostUpdate}
     />;
   }
 }

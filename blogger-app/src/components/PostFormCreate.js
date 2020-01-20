@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import PostForm from './PostForm';
-import { posts } from '../data/store';
+import { addPost } from '../api/posts';
 
 class PostFormCreate extends Component {
-  handlePostCreate = (post) => {
-    post.id = Date.now();
-    posts.push(post);
+  handlePostCreate = post => {
+    addPost(post);
     this.props.history.push('/posts');
   }
 
