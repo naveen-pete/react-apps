@@ -28,7 +28,11 @@ const App = () => {
 
   return <div>
     <h3>Pagination Demo</h3>
-    <CustomPaginationActionsTable rows={todos} rowCount={rowCount} onChange={handleChange} />
+    <CustomPaginationActionsTable
+      rows={todos}
+      rowCount={rowCount}
+      onChange={handleChange}
+    />
   </div>;
 }
 
