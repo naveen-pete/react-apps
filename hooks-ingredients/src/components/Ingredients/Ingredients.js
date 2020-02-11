@@ -1,15 +1,15 @@
-import React, { useReducer, useCallback } from 'react';
+import React, { useReducer, useCallback, useMemo } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 import ErrorModal from '../UI/ErrorModal';
+import Logout from '../Logout';
+
 
 import ingredientService from '../../services/IngredientService';
 
 const ingredientReducer = (state, action) => {
-  console.log('ingredientReducer:', state, action);
-
   switch (action.type) {
     case 'GET_ALL':
       return action.payload;
@@ -26,8 +26,6 @@ const ingredientReducer = (state, action) => {
 };
 
 const httpReducer = (state, action) => {
-  console.log('httpReducer:', state, action);
-
   switch (action.type) {
     case 'REQUEST':
       return { showLoader: true, error: null };
@@ -66,54 +64,73 @@ function Ingredients() {
     []
   );
 
-  const handleAddIngredient = async ingredient => {
-    // setShowLoader(true);
-    httpDispatch({ type: 'REQUEST' });
+  const handleAddIngredient = useCallback(
+    async ingredient => {
+      // setShowLoader(true);
+      httpDispatch({ type: 'REQUEST' });
 
-    try {
-      const responseData = await ingredientService.create(ingredient);
-      ingredient.id = responseData.name;
+      try {
+        const responseData = await ingredientService.create(ingredient);
+        ingredient.id = responseData.name;
 
-      ingredientDispatch({
-        type: 'CREATE',
-        payload: ingredient
-      });
+        ingredientDispatch({
+          type: 'CREATE',
+          payload: ingredient
+        });
 
-      // setShowLoader(false);
-      httpDispatch({ type: 'RESPONSE' });
-    } catch (e) {
-      // setShowLoader(false);
-      // setError('Create ingredient failed.');
-      httpDispatch({ type: 'ERROR', payload: 'Create ingredient failed.' });
-      console.log('Error:', e);
-    }
-  };
+        // setShowLoader(false);
+        httpDispatch({ type: 'RESPONSE' });
+      } catch (e) {
+        // setShowLoader(false);
+        // setError('Create ingredient failed.');
+        httpDispatch({ type: 'ERROR', payload: 'Create ingredient failed.' });
+        console.log('Error:', e);
+      }
+    },
+    []
+  );
 
-  const handleRemoveIngredient = async id => {
-    // setShowLoader(true);
-    httpDispatch({ type: 'REQUEST' });
+  const handleRemoveIngredient = useCallback(
+    async id => {
+      // setShowLoader(true);
+      httpDispatch({ type: 'REQUEST' });
 
-    try {
-      await ingredientService.delete(id);
+      try {
+        await ingredientService.delete(id);
 
-      ingredientDispatch({
-        type: 'DELETE',
-        payload: id
-      });
+        ingredientDispatch({
+          type: 'DELETE',
+          payload: id
+        });
 
-      // setShowLoader(false);
-      httpDispatch({ type: 'RESPONSE' });
-    } catch (e) {
-      // setShowLoader(false);
-      // setError('Delete ingredient failed.');
-      httpDispatch({ type: 'ERROR', payload: 'Delete ingredient failed.' });
-      console.log('Error:', e);
-    }
-  };
+        // setShowLoader(false);
+        httpDispatch({ type: 'RESPONSE' });
+      } catch (e) {
+        // setShowLoader(false);
+        // setError('Delete ingredient failed.');
+        httpDispatch({ type: 'ERROR', payload: 'Delete ingredient failed.' });
+        console.log('Error:', e);
+      }
+    },
+    []
+  );
+
+  const ingredientList = useMemo(() => {
+    return <IngredientList
+      ingredients={ingredients}
+      onRemoveItem={handleRemoveIngredient}
+    />;
+  }, [ingredients, handleRemoveIngredient]);
+
+  const handleClose = useCallback(
+    () => httpDispatch({ type: 'CLEAR' }),
+    []
+  );
 
   return (
     <div className="App">
-      {httpState.error && <ErrorModal onClose={() => httpDispatch({ type: 'CLEAR' })}>{httpState.error}</ErrorModal>}
+      {httpState.error && <ErrorModal onClose={handleClose}>{httpState.error}</ErrorModal>}
+      <Logout />
 
       <IngredientForm
         onAddIngredient={handleAddIngredient}
@@ -125,7 +142,7 @@ function Ingredients() {
           onSearchIngredients={handleSearchIngredients}
           onError={handleError}
         />
-        <IngredientList ingredients={ingredients} onRemoveItem={handleRemoveIngredient} />
+        {ingredientList}
       </section>
     </div>
   );
