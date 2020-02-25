@@ -6,6 +6,7 @@ import { createPost } from '../actions/posts';
 
 class PostFormCreate extends Component {
   handleSubmit = async post => {
+    delete post.id;
     await this.props.createPost(post);
     this.props.history.push('/posts');
   }

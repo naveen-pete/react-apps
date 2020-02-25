@@ -1,28 +1,15 @@
 import { CategoryActionTypes } from '../constants';
-import categoryService from '../services/CategoryService';
 
-export const getCategories = () => {
-  return dispatch => {
-    return categoryService.getAll()
-      .then(categories => {
-        dispatch(setCategories(categories));
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
-  };
-}
+export const getCategories = () => ({
+  type: CategoryActionTypes.GET_CATEGORIES
+});
 
-export const setCategories = categories => {
-  return {
-    type: CategoryActionTypes.SET_CATEGORIES,
-    payload: categories
-  };
-};
+export const setCategories = categories => ({
+  type: CategoryActionTypes.SET_CATEGORIES,
+  payload: categories
+});
 
-export const selectCategory = category => {
-  return {
-    type: CategoryActionTypes.SELECT_CATEGORY,
-    payload: category
-  };
-}
+export const selectCategory = category => ({
+  type: CategoryActionTypes.SELECT_CATEGORY,
+  payload: category
+});

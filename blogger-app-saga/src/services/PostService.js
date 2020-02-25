@@ -3,17 +3,17 @@ import { apiBaseUrl } from '../constants';
 class PostService {
   apiUrlPosts = `${apiBaseUrl}/posts`;
 
-  getAll() {
+  getAll = () => {
     return fetch(this.apiUrlPosts)
       .then(response => response.json());
   }
 
-  get(id) {
+  get = id => {
     return fetch(`${this.apiUrlPosts}/${id}`)
       .then(response => response.json());
   }
 
-  create(post) {
+  create = post => {
     return fetch(this.apiUrlPosts, {
       method: 'POST',
       body: JSON.stringify(post),
@@ -24,7 +24,7 @@ class PostService {
       .then(response => response.json());
   }
 
-  update(post) {
+  update = post => {
     return fetch(`${this.apiUrlPosts}/${post.id}`, {
       method: 'PATCH',
       body: JSON.stringify(post),
@@ -35,7 +35,7 @@ class PostService {
       .then(response => response.json());
   }
 
-  delete(id) {
+  delete = id => {
     return fetch(`${this.apiUrlPosts}/${id}`, {
       method: 'DELETE'
     })

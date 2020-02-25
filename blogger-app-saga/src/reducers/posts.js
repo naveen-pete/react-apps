@@ -6,6 +6,7 @@ const postsReducer = (state = [], action) => {
       return [...action.payload];
 
     case PostActionTypes.SET_POST:
+    case PostActionTypes.SET_UPDATED_POST:
       const payload = action.payload;
       const post = state.find(p => p.id === payload.id);
       let newState = post
