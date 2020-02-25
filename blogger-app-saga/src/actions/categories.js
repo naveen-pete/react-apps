@@ -1,15 +1,15 @@
-import { CategoryActionTypes } from '../constants';
+import { CategoryAction } from '../constants';
 
 export const getCategories = () => ({
-  type: CategoryActionTypes.GET_CATEGORIES
+  type: CategoryAction.GET_CATEGORIES
 });
 
 export const setCategories = categories => ({
-  type: CategoryActionTypes.SET_CATEGORIES,
+  type: CategoryAction.SET_CATEGORIES,
   payload: categories
 });
 
 export const selectCategory = category => ({
-  type: CategoryActionTypes.SELECT_CATEGORY,
+  type: CategoryAction.SELECT_CATEGORY,
   payload: category
 });

@@ -1,50 +1,50 @@
-import { PostActionTypes } from '../constants';
+import { PostAction } from '../constants';
 
 export const getPosts = () => ({
-  type: PostActionTypes.GET_POSTS
+  type: PostAction.GET_POSTS
 });
 
 export const setPosts = posts => ({
-  type: PostActionTypes.SET_POSTS,
+  type: PostAction.SET_POSTS,
   payload: posts
 });
 
 export const getPost = id => ({
-  type: PostActionTypes.GET_POST,
+  type: PostAction.GET_POST,
   payload: id
 });
 
 export const setPost = post => ({
-  type: PostActionTypes.SET_POST,
+  type: PostAction.SET_POST,
   payload: post
 });
 
 export const createPost = post => ({
-  type: PostActionTypes.CREATE_POST,
+  type: PostAction.CREATE_POST,
   payload: post
 });
 
 export const setCreatedPost = post => ({
-  type: PostActionTypes.SET_CREATED_POST,
+  type: PostAction.SET_CREATED_POST,
   payload: post
 });
 
 export const updatePost = post => ({
-  type: PostActionTypes.UPDATE_POST,
+  type: PostAction.UPDATE_POST,
   payload: post
 });
 
 export const setUpdatedPost = post => ({
-  type: PostActionTypes.SET_UPDATED_POST,
+  type: PostAction.SET_UPDATED_POST,
   payload: post
 });
 
 export const deletePost = id => ({
-  type: PostActionTypes.DELETE_POST,
+  type: PostAction.DELETE_POST,
   payload: id
 });
 
 export const removeDeletedPost = id => ({
-  type: PostActionTypes.REMOVE_DELETED_POST,
+  type: PostAction.REMOVE_DELETED_POST,
   payload: id
 });

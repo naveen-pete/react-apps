@@ -1,6 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-import { PostActionTypes } from "../constants";
+import { PostAction } from "../constants";
 import { setPosts, setPost, setCreatedPost, setUpdatedPost, removeDeletedPost } from "../actions/posts";
 import postService from '../services/PostService';
 
@@ -56,9 +56,9 @@ function* handleDeletePost(action) {
 }
 
 export default function* watchPostsSaga() {
-  yield takeEvery(PostActionTypes.GET_POSTS, handleGetPosts);
-  yield takeEvery(PostActionTypes.GET_POST, handleGetPost);
-  yield takeEvery(PostActionTypes.CREATE_POST, handleCreatePost);
-  yield takeEvery(PostActionTypes.UPDATE_POST, handleUpdatePost);
-  yield takeEvery(PostActionTypes.DELETE_POST, handleDeletePost);
+  yield takeEvery(PostAction.GET_POSTS, handleGetPosts);
+  yield takeEvery(PostAction.GET_POST, handleGetPost);
+  yield takeEvery(PostAction.CREATE_POST, handleCreatePost);
+  yield takeEvery(PostAction.UPDATE_POST, handleUpdatePost);
+  yield takeEvery(PostAction.DELETE_POST, handleDeletePost);
 }

@@ -1,8 +1,8 @@
-import { CategoryActionTypes } from '../constants';
+import { CategoryAction } from '../constants';
 
 const categoriesReducer = (state = [], action) => {
   switch (action.type) {
-    case CategoryActionTypes.SET_CATEGORIES:
+    case CategoryAction.SET_CATEGORIES:
       return [...action.payload];
 
     default:

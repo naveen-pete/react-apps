@@ -5,14 +5,14 @@ export const categoryAll = {
 
 export const apiBaseUrl = 'http://localhost:3001';
 
-export class CategoryActionTypes {
+export class CategoryAction {
   static SELECT_CATEGORY = 'SELECT_CATEGORY';
 
   static GET_CATEGORIES = 'GET_CATEGORIES';
   static SET_CATEGORIES = 'SET_CATEGORIES';
 }
 
-export class PostActionTypes {
+export class PostAction {
   static GET_POSTS = 'GET_POSTS';
   static SET_POSTS = 'SET_POSTS';
 
