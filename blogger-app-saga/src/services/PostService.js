@@ -1,7 +1,5 @@
-import { apiBaseUrl } from '../constants';
-
 class PostService {
-  apiUrlPosts = `${apiBaseUrl}/posts`;
+  apiUrlPosts = `${process.env.REACT_APP_API_BASE_URL}/posts`;
 
   getAll = () => {
     return fetch(this.apiUrlPosts)

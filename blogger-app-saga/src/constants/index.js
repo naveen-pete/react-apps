@@ -3,8 +3,6 @@ export const categoryAll = {
   name: 'All'
 };
 
-export const apiBaseUrl = 'http://localhost:3001';
-
 export class CategoryAction {
   static SELECT_CATEGORY = 'SELECT_CATEGORY';
 
