@@ -1,4 +1,4 @@
-import { PostActionTypes } from '../constants';
+import { PostAction } from '../constants';
 import postService from '../services/PostService';
 
 export const getPosts = () => {
@@ -6,92 +6,82 @@ export const getPosts = () => {
     try {
       const posts = await postService.getAll();
       dispatch(setPosts(posts));
-    } catch (e) {
+    } catch (error) {
       console.log('Get posts failed.');
-      console.log('Error:', e);
+      console.log('Error:', error);
     }
   };
 };
 
-const setPosts = posts => {
-  return {
-    type: PostActionTypes.SET_POSTS,
-    payload: posts
-  };
-};
+const setPosts = posts => ({
+  type: PostAction.SET_POSTS,
+  payload: posts
+});
 
 export const getPost = id => {
   return async dispatch => {
     try {
       const post = await postService.get(id);
       dispatch(setPost(post));
-    } catch (e) {
+    } catch (error) {
       console.log('Get post failed.');
-      console.log('Error:', e);
+      console.log('Error:', error);
     }
   };
 };
 
-const setPost = post => {
-  return {
-    type: PostActionTypes.SET_POST,
-    payload: post
-  };
-};
+const setPost = post => ({
+  type: PostAction.SET_POST,
+  payload: post
+});
 
 export const createPost = post => {
   return async dispatch => {
     try {
       const newPost = await postService.create(post);
       dispatch(setCreatedPost(newPost));
-    } catch (e) {
+    } catch (error) {
       console.log('Create post failed.');
-      console.log('Error:', e);
+      console.log('Error:', error);
     }
   };
 };
 
-const setCreatedPost = post => {
-  return {
-    type: PostActionTypes.SET_CREATED_POST,
-    payload: post
-  };
-};
+const setCreatedPost = post => ({
+  type: PostAction.SET_CREATED_POST,
+  payload: post
+});
 
 export const updatePost = post => {
   return async dispatch => {
     try {
       const updatedPost = await postService.update(post);
       dispatch(setUpdatedPost(updatedPost));
-    } catch (e) {
-      console.log('Updated post failed.');
-      console.log('Error:', e);
+    } catch (error) {
+      console.log('Update post failed.');
+      console.log('Error:', error);
     }
   };
 };
 
-const setUpdatedPost = post => {
-  return {
-    type: PostActionTypes.SET_UPDATED_POST,
-    payload: post
-  };
-};
+const setUpdatedPost = post => ({
+  type: PostAction.SET_UPDATED_POST,
+  payload: post
+});
 
 export const deletePost = id => {
   return async dispatch => {
     try {
       await postService.delete(id);
       dispatch(removeDeletedPost(id))
-    } catch (e) {
+    } catch (error) {
       console.log('Delete post failed.');
-      console.log('Error:', e);
+      console.log('Error:', error);
     }
   };
 };
 
-const removeDeletedPost = id => {
-  return {
-    type: PostActionTypes.REMOVE_DELETED_POST,
-    payload: id
-  };
-};
+const removeDeletedPost = id => ({
+  type: PostAction.REMOVE_DELETED_POST,
+  payload: id
+});

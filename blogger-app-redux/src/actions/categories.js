@@ -1,28 +1,24 @@
-import { CategoryActionTypes } from '../constants';
+import { CategoryAction } from '../constants';
 import categoryService from '../services/CategoryService';
 
 export const getCategories = () => {
-  return dispatch => {
-    return categoryService.getAll()
-      .then(categories => {
-        dispatch(setCategories(categories));
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
-  };
-}
-
-export const setCategories = categories => {
-  return {
-    type: CategoryActionTypes.SET_CATEGORIES,
-    payload: categories
+  return async dispatch => {
+    try {
+      const categories = await categoryService.getAll();
+      dispatch(setCategories(categories));
+    } catch (error) {
+      console.log('Get categories failed.');
+      console.log('Error:', error);
+    }
   };
 };
 
-export const selectCategory = category => {
-  return {
-    type: CategoryActionTypes.SELECT_CATEGORY,
-    payload: category
-  };
-}
+export const setCategories = categories => ({
+  type: CategoryAction.SET_CATEGORIES,
+  payload: categories
+});
+
+export const selectCategory = category => ({
+  type: CategoryAction.SELECT_CATEGORY,
+  payload: category
+});

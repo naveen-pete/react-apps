@@ -13,13 +13,14 @@ class PostFormUpdate extends Component {
     this.props.getPost(this.id);
   }
 
-  handleSubmit = async post => {
-    await this.props.updatePost(post);
+  handleSubmit = post => {
+    this.props.updatePost(post);
     this.props.history.push('/posts');
   }
 
   render() {
-    const post = this.props.posts.find(p => p.id === this.id);
+    const { posts } = this.props;
+    const post = posts.find(p => p.id === this.id);
 
     return <PostForm
       operation="Update"

@@ -9,19 +9,20 @@ class PostDetail extends Component {
     return parseInt(this.props.match.params.id);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.getPost(this.id);
   }
 
-  handleDeleteClick = async () => {
+  handleDeleteClick = () => {
     if (window.confirm('Are you sure?')) {
-      await this.props.deletePost(this.id);
+      this.props.deletePost(this.id);
       this.props.history.push('/posts');
     }
   }
 
   render() {
-    const { categories, posts } = this.props;
+    const { categories, posts, history } = this.props;
+
     const post = posts.find(p => p.id === this.id);
 
     if (!post) {
@@ -49,7 +50,7 @@ class PostDetail extends Component {
         <button
           className="btn btn-sm btn-outline-primary mr-1"
           type="button"
-          onClick={() => this.props.history.push(`/posts/${post.id}/edit`)}
+          onClick={() => history.push(`/posts/${post.id}/edit`)}
         >Edit</button>
         <button
           className="btn btn-sm btn-outline-danger mr-1"
@@ -59,7 +60,7 @@ class PostDetail extends Component {
         <button
           className="btn btn-sm btn-outline-info"
           type="button"
-          onClick={() => this.props.history.goBack()}
+          onClick={() => history.goBack()}
         >Back</button>
       </div>
     </div>;

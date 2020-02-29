@@ -6,7 +6,7 @@ import { createPost } from '../actions/posts';
 
 class PostFormCreate extends Component {
   handleSubmit = async post => {
-    await this.props.createPost(post);
+    this.props.createPost(post);
     this.props.history.push('/posts');
   }
 
@@ -20,6 +20,6 @@ class PostFormCreate extends Component {
 
 const mapDispatchToProps = dispatch => ({
   createPost: post => dispatch(createPost(post))
-})
+});
 
 export default connect(null, mapDispatchToProps)(PostFormCreate);

@@ -7,11 +7,11 @@ import thunk from 'redux-thunk';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
-import appReducer from './reducers';
 import App from './components/App';
+import rootReducer from './reducers';
 
 const appStore = createStore(
-  appReducer,
+  rootReducer,
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -24,5 +24,5 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </Provider>,
-  document.querySelector('#root')
+  document.getElementById('root')
 );

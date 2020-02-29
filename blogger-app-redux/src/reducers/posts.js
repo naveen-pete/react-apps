@@ -1,11 +1,12 @@
-import { PostActionTypes } from '../constants';
+import { PostAction } from '../constants';
 
 const postsReducer = (state = [], action) => {
   switch (action.type) {
-    case PostActionTypes.SET_POSTS:
+    case PostAction.SET_POSTS:
       return [...action.payload];
 
-    case PostActionTypes.SET_POST:
+    case PostAction.SET_POST:
+    case PostAction.SET_UPDATED_POST:
       const payload = action.payload;
       const post = state.find(p => p.id === payload.id);
       let newState = post
@@ -13,10 +14,10 @@ const postsReducer = (state = [], action) => {
         : [...state, payload];
       return newState;
 
-    case PostActionTypes.SET_CREATED_POST:
+    case PostAction.SET_CREATED_POST:
       return [...state, action.payload];
 
-    case PostActionTypes.REMOVE_DELETED_POST:
+    case PostAction.REMOVE_DELETED_POST:
       return state.filter(post => post.id !== action.payload);
 
     default:

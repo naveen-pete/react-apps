@@ -9,7 +9,7 @@ class PostForm extends Component {
     author: '',
     category: '',
 
-    initialized: false,
+    initialized: false
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -23,31 +23,35 @@ class PostForm extends Component {
     return null;
   }
 
+  handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    this.setState({ [name]: value });
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
     const { id, title, body, author, category } = this.state;
-    this.props.onSubmit({
+
+    const post = {
       id,
       title,
       body,
       author,
       category
-    });
-  }
+    };
 
-  handleChange = e => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.props.onSubmit(post);
   }
 
   render() {
-    const { operation } = this.props;
-    const { title, body, author, category } = this.state;
     const { categories } = this.props;
+    const { title, body, author, category } = this.state;
 
     return <div>
-      <h4 className="mr-3">{operation} Post</h4>
+      <h3 className="mr-3">{this.props.operation} Post</h3>
 
       <div className="card bg-light">
         <div className="card-body">
@@ -55,6 +59,7 @@ class PostForm extends Component {
             <div className="form-group">
               <label htmlFor="title">Title</label>
               <input
+                required
                 type="text"
                 className="form-control"
                 id="title"
@@ -67,6 +72,7 @@ class PostForm extends Component {
             <div className="form-group">
               <label htmlFor="body">Body</label>
               <textarea
+                required
                 className="form-control"
                 id="body"
                 name="body"
@@ -81,6 +87,7 @@ class PostForm extends Component {
             <div className="form-group">
               <label htmlFor="author">Author</label>
               <input
+                required
                 type="text"
                 className="form-control"
                 id="author"
@@ -100,9 +107,13 @@ class PostForm extends Component {
                 value={category}
                 onChange={this.handleChange}
               >
-                <option value="">--Select--</option>
+                <option value="">- Select -</option>
                 {categories.map(c => <option
-                  key={c.id} value={c.id}>{c.name}</option>
+                  value={c.id}
+                  key={c.id}
+                >
+                  {c.name}
+                </option>
                 )}
               </select>
             </div>

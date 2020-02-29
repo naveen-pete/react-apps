@@ -1,19 +1,11 @@
-import { categories } from '../data/store';
-
-import { apiBaseUrl } from '../constants';
-
 class CategoryService {
-  apiUrlCategories = `${apiBaseUrl}/categories`;
+  apiUrlCategories = `${process.env.REACT_APP_API_BASE_URL}/categories`;
 
   getAll() {
     return fetch(this.apiUrlCategories)
       .then(response => response.json());
   }
-
-  get(id) {
-    const category = categories.find(c => c.id === id);
-    return category;
-  }
 }
 
-export default new CategoryService();
+const instance = new CategoryService();
+export default instance;
