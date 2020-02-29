@@ -1,38 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { categoryAll } from '../constants';
-import categoryService from '../services/CategoryService';
 
-class Categories extends Component {
-  state = {
-    categories: []
-  }
+const Categories = (props) => {
+  const categories = props.data;
 
-  async componentDidMount() {
-    try {
-      const categories = await categoryService.getAll();
+  const categoriesWithAll = [categoryAll, ...categories];
 
-      this.setState({ categories });
-    } catch (error) {
-      console.log('Get categories failed.');
-      console.log('Error:', error);
-    }
-  }
+  return <div>
+    <h3>Categories</h3>
 
-  render() {
-    const categoriesWithAll = [categoryAll, ...this.state.categories];
-
-    return <div>
-      <h3>Categories</h3>
-
-      <div className="list-group">
-        {categoriesWithAll.map(c => <button onClick={() => this.props.onCategorySelect(c)}
-          key={c.id} type="button" className="list-group-item list-group-item-action">
+    <div className="list-group">
+      {categoriesWithAll.map(c => {
+        return <button
+          key={c.id}
+          type="button"
+          className="list-group-item list-group-item-action"
+          onClick={() => props.onCategorySelect(c)}
+        >
           {c.name}
-        </button>)}
-      </div>
-    </div>;
-  }
-}
+        </button>
+      })}
+    </div>
+  </div>
+};
 
 export default Categories;

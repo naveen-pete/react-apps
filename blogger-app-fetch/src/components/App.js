@@ -1,27 +1,59 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Header from './Header';
 import Home from './Home';
 import Posts from './Posts';
-import PostDetail from './PostDetail';
 import PostFormCreate from './PostFormCreate';
-import PostFormUpdate from './PostFormUpdate'
+import PostFormUpdate from './PostFormUpdate';
+import PostDetail from './PostDetail';
 
-const App = () => {
-  return (
-    <div className="container">
-      <Header />
+import categoryService from '../services/CategoryService';
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/posts" component={Posts} />
-        <Route exact path="/posts/create" component={PostFormCreate} />
-        <Route exact path="/posts/:id" component={PostDetail} />
-        <Route path="/posts/:id/edit" component={PostFormUpdate} />
-      </Switch>
-    </div>
-  );
-};
+class App extends Component {
+  state = {
+    categories: []
+  }
+
+  componentDidMount() {
+    categoryService.getAll()
+      .then(categories => this.setState({ categories }))
+      .catch(error => {
+        console.log('Get categories failed.');
+        console.log('Error:', error);
+      });
+    // 
+  }
+
+  render() {
+    const categories = this.state.categories;
+
+    return (
+      <div className="container">
+        <Header />
+
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/posts"
+            render={(props) => <Posts categories={categories} {...props} />}
+          />
+          <Route
+            exact
+            path="/posts/new"
+            render={(props) => <PostFormCreate categories={categories} {...props} />}
+          />
+          <Route exact path="/posts/:id" component={PostDetail} />
+          <Route
+            exact
+            path="/posts/:id/edit"
+            render={(props) => <PostFormUpdate categories={categories} {...props} />}
+          />
+        </Switch>
+      </div>
+    );
+  }
+}
 
 export default App;

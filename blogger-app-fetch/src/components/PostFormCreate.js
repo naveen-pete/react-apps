@@ -9,14 +9,15 @@ class PostFormCreate extends Component {
       delete post.id;
       await postService.create(post);
       this.props.history.push('/posts');
-    } catch (error) {
+    } catch (e) {
       console.log('Create post failed.');
-      console.log('Error:', error);
+      console.log('Error:', e);
     }
   }
 
   render() {
     return <PostForm
+      categories={this.props.categories}
       operation="Create"
       onSubmit={this.handleSubmit}
     />;
