@@ -23,8 +23,7 @@ class PostForm extends Component {
   }
 
   handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name, value } = e.target;
 
     this.setState({ [name]: value });
   }
@@ -46,12 +45,11 @@ class PostForm extends Component {
   }
 
   render() {
-    const categories = this.props.categories;
-
+    const { categories, operation } = this.props;
     const { title, body, author, category } = this.state;
 
     return <div>
-      <h3 className="mr-3">{this.props.operation} Post</h3>
+      <h3 className="mr-3">{operation} Post</h3>
 
       <div className="card bg-light">
         <div className="card-body">

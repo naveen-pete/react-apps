@@ -7,5 +7,4 @@ class CategoryService {
   }
 }
 
-const instance = new CategoryService();
-export default instance;
+export default new CategoryService();
